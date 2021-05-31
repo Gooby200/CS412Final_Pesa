@@ -1,0 +1,28 @@
+﻿body {
+    background-color: #5a50f4;
+}
+
+#navHolder {
+    background-color: white;
+}
+
+.nav-space {
+    margin-top: 10px;
+}
+
+.nav-link:hover {
+    background-color: #d3d3d3;
+}
+
+.push-panel {
+    margin-top: 20px;
+}
+
+.site-title {
+    font-weight: 900;
+    font-size: 24px;
+}
+
+.footer-space {
+    margin-bottom: 100px;
+}

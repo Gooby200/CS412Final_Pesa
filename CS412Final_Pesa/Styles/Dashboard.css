@@ -1,0 +1,23 @@
+﻿.numberInfo {
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    text-align: center;
+}
+
+.numberText {
+    font-size: 25px;
+}
+
+.ordersTable {
+    margin-top: 20px;
+    background-color: white;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.delete-mark {
+    color: red;
+}

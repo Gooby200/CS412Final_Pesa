@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace CS412Final_Pesa {
-    public partial class Contact : Page {
+    public partial class SignUp : Page {
         protected void Page_Load(object sender, EventArgs e) {
 
         }
