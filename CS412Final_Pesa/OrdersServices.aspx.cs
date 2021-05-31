@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace CS412Final_Pesa {
-    public partial class About : Page {
+    public partial class OrdersServicesPage : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
 
         }
