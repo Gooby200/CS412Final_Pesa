@@ -126,6 +126,7 @@
     <Content Include="Dashboard.aspx" />
     <Content Include="OrdersServices.aspx" />
     <Content Include="Logout.aspx" />
+    <Content Include="Example3.aspx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -167,6 +168,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Public.Master.cs">
       <DependentUpon>Public.Master</DependentUpon>
@@ -223,6 +225,13 @@
     </Compile>
     <Compile Include="Logout.aspx.designer.cs">
       <DependentUpon>Logout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Example3.aspx.cs">
+      <DependentUpon>Example3.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Example3.aspx.designer.cs">
+      <DependentUpon>Example3.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

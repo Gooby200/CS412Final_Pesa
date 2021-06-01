@@ -3,12 +3,12 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="form-content">
-        <label class="fw-bold" for="email">Email</label>
-        <input type="email" id="email" class="form-control" />
-        <label class="fw-bold" for="pass">Password</label>
-        <input type="password" id="pass" class="form-control" />
+        <label class="fw-bold" for="<%= email.ClientID %>">Email</label>
+        <asp:TextBox ID="email" CssClass="form-control" TextMode="Email" runat="server"></asp:TextBox>
+        <label class="fw-bold" for="<%= pass.ClientID %>">Password</label>
+        <asp:TextBox ID="pass" CssClass="form-control" TextMode="Password" runat="server"></asp:TextBox>
         <div class="clearfix">
-            <input type="submit" value="Login" class="btn btn-primary float-end btn-push-top-10" />
+            <asp:Button ID="submit" CssClass="btn btn-primary float-end btn-push-top-10" runat="server" Text="Login" />
         </div>
     </div>
 </asp:Content>
