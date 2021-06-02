@@ -11,8 +11,10 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
 
-    <label for="<%= name.ClientID %>">Name</label><br />
-    <asp:TextBox ID="name" runat="server" CssClass="form-control"></asp:TextBox>
+    <label for="<%= myCoolTextbox.ClientID %>">Name</label><br />
+    <asp:TextBox ID="myCoolTextbox" runat="server" CssClass="form-control"></asp:TextBox><br />
+    <br />
+    <br />
     <asp:Button ID="Button2" runat="server" Text="Button" OnClick="Button2_Click" />
     <br />
     <br />
@@ -42,35 +44,41 @@
     <asp:Button ID="Button3" runat="server" Text="Toggle Label Visibility" OnClick="Button3_Click" />
     <br />
     <br />
-    <asp:GridView ID="GridView1" runat="server" AllowPaging="true" PageSize="10" OnRowCommand="GridView1_RowCommand" OnRowDataBound="GridView1_RowDataBound" OnRowEditing="GridView1_RowEditing" OnRowDeleting="GridView1_RowDeleting">
-        <Columns>
-            <%-- will grab and implement data from the source list --%>
-            <asp:BoundField HeaderText="Bound ID" DataField="Id" />
 
-<%--             custom field that can be manipulated to load data from the 
-                source into whatever element you add in here --%>
-            <asp:TemplateField HeaderText="Custom ID">
-                <ItemTemplate>
-                    <asp:Label ID="userId" runat="server" Text="Label"></asp:Label>
-                </ItemTemplate>
-            </asp:TemplateField>
+    <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+        <ContentTemplate>
+            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" AllowPaging="true" PageSize="10" OnRowCommand="GridView1_RowCommand" OnRowDataBound="GridView1_RowDataBound" OnRowEditing="GridView1_RowEditing" OnRowDeleting="GridView1_RowDeleting">
+                <Columns>
+                    <%-- will grab and implement data from the source list --%>
+                    <asp:BoundField HeaderText="Bound ID" DataField="Id" />
 
-            <asp:TemplateField HeaderText="Custom Name Column">
-                <ItemTemplate>
-                    <asp:Label ID="userName" runat="server" Text="Label"></asp:Label>
-                </ItemTemplate>
-            </asp:TemplateField>
+        <%--             custom field that can be manipulated to load data from the 
+                        source into whatever element you add in here --%>
+                    <asp:TemplateField HeaderText="Custom ID">
+                        <ItemTemplate>
+                            <asp:Label ID="userId" runat="server" Text="Label"></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
 
-<%--             a button that can perform any action you want upon a button click --%>
-            <asp:ButtonField HeaderText="Button Action" Text="Click Me" CommandName="CLICKED" />
+                    <asp:TemplateField HeaderText="Custom Name Column">
+                        <ItemTemplate>
+                            <asp:Label ID="userName" runat="server" Text="Label"></asp:Label>
+                            <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
+                        </ItemTemplate>
+                    </asp:TemplateField>
 
-<%--             a command field that gives the user a bunch of abilities.
-                these commands have to be handled in the backend in the same
-                way as a buttonfield, but this gives a better way to manage that and provides element
-                changes out of the box --%>
-            <asp:CommandField HeaderText="Command Actions" ShowCancelButton="true" ShowDeleteButton="true" ShowEditButton="true" ShowInsertButton="true" ShowSelectButton="true" />
-        </Columns>
-    </asp:GridView>
+        <%--             a button that can perform any action you want upon a button click --%>
+                    <asp:ButtonField HeaderText="Button Action" Text="Click Me" CommandName="CLICKED" />
+
+        <%--             a command field that gives the user a bunch of abilities.
+                        these commands have to be handled in the backend in the same
+                        way as a buttonfield, but this gives a better way to manage that and provides element
+                        changes out of the box --%>
+                    <asp:CommandField HeaderText="Command Actions" ShowCancelButton="true" ShowDeleteButton="true" ShowEditButton="true" ShowInsertButton="true" ShowSelectButton="true" />
+                </Columns>
+            </asp:GridView>
+        </ContentTemplate>
+    </asp:UpdatePanel>
     <br />
     <br />
     <!-- requires scrip manager -->
@@ -99,14 +107,14 @@
     <br />
     <br />
     <asp:DropDownList ID="DropDownList1" runat="server">
-        <asp:ListItem>User1</asp:ListItem>
-        <asp:ListItem>User2</asp:ListItem>
-        <asp:ListItem>User3</asp:ListItem>
+        <asp:ListItem Value="test1">User1</asp:ListItem>
+        <asp:ListItem Value="test2">User2</asp:ListItem>
+        <asp:ListItem Value="test3">User3</asp:ListItem>
     </asp:DropDownList>
     <br />
     <br />
-    <asp:Literal ID="Literal1" runat="server" Text="<script>alert('test')</script>"></asp:Literal>
-    <asp:Literal ID="encodedLiteral" runat="server" Mode="Encode" Text="<script>alert('test')</script>"></asp:Literal>
+    <asp:Literal ID="Literal1" runat="server" Text="<script>alert('hello i am an alert')</script>"></asp:Literal>
+    <asp:Literal ID="encodedLiteral" runat="server" Mode="Encode" Text="<script>alert('i am a test alert that wont work')</script>"></asp:Literal>
     <br />
     <br />
     <asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButton1_Click">I am a link button</asp:LinkButton>
@@ -114,7 +122,7 @@
     <br />
     <br />
     <!-- whats the difference when this is all rendered? -->
-    <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+    <%--<asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>--%>
     <input type="text" id="diffTextbox" />
     <br />
     <br />
@@ -143,9 +151,12 @@
     <asp:Button ID="Button6" runat="server" Text="Button" OnClick="Button6_Click"/>
     <br />
     <br />
-    <asp:RadioButton ID="RadioButton1" GroupName="RadioGroup" runat="server" Text="Click Me" />
-    <asp:RadioButton ID="RadioButton2" GroupName="RadioGroup" runat="server" Text="Click Me" />
-    <asp:RadioButton ID="RadioButton3" GroupName="RadioGroup" runat="server" Text="Click Me" /><br />
+    <asp:RadioButton ID="RadioButton1" GroupName="aaaa" runat="server" Text="Click Me" />
+    <asp:RadioButton ID="RadioButton2" GroupName="aaaa" runat="server" Text="Click Me" />
+    <asp:RadioButton ID="RadioButton3" GroupName="aaaa" runat="server" Text="Click Me" /><br />
     <asp:Label ID="Label5" runat="server" Text="Label"></asp:Label><br />
-    <asp:Button ID="Button7" runat="server" Text="Button" OnClick="Button7_Click"/>
+    <asp:Button ID="Button7" runat="server" Text="Button" OnClick="Button7_Click"/><br />
+    <br />
+    <br />
+    <asp:HiddenField ID="HiddenField1" runat="server" Value="i am value" />
 </asp:Content>

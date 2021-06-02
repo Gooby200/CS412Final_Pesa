@@ -32,6 +32,8 @@ namespace CS412Final_Pesa {
 
                 BindGridView();
                 BindRepeater();
+
+                HiddenField1.Value = "asdaaaadfasdf";
             }
         }
 
@@ -79,6 +81,10 @@ namespace CS412Final_Pesa {
 
                 Label userName = (Label)e.Row.FindControl("userName");
                 userName.Text = $"{user.First} {user.Last}";
+                userName.ForeColor = System.Drawing.Color.Red;
+
+                TextBox myTextbox = (TextBox)e.Row.FindControl("TextBox3");
+                myTextbox.Text = "hello";
             }
         }
 
@@ -130,6 +136,7 @@ namespace CS412Final_Pesa {
 
         protected void LinkButton1_Click(object sender, EventArgs e) {
             Response.Redirect("http://www.google.com/");
+            HiddenField1.Value = "asdf";
         }
 
         protected void Button4_Click(object sender, EventArgs e) {
@@ -181,6 +188,11 @@ namespace CS412Final_Pesa {
             } else if (TextBox2.Text.Contains("hello")) {
                 //do some code here
             }
+        }
+
+        protected void Button10_Click(object sender, EventArgs e) {
+            if (true == true)
+                Response.Write("i am the response");
         }
     }
 }
