@@ -3,18 +3,21 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="form-content">
-        <label class="fw-bold" for="first">First Name</label>
-        <input type="text" id="first" class="form-control" />
-        <label class="fw-bold" for="last">Last Name</label>
-        <input type="text" id="last" class="form-control" />
-        <label class="fw-bold" for="email">Email</label>
-        <input type="email" id="email" class="form-control" />
-        <label class="fw-bold" for="pass">Password</label>
-        <input type="text" id="pass" class="form-control" />
-        <label class="fw-bold" for="vpass">Verify Password</label>
-        <input type="text" id="vpass" class="form-control" />
+        <label class="fw-bold" for="<%= first.ClientID %>">First Name</label>
+        <asp:TextBox ID="first" runat="server" CssClass="form-control"></asp:TextBox>
+        <label class="fw-bold" for="<%= last.ClientID %>">Last Name</label>
+        <asp:TextBox ID="last" runat="server" CssClass="form-control"></asp:TextBox>
+        <label class="fw-bold" for="<%= email.ClientID %>">Email</label>
+        <asp:TextBox ID="email" TextMode="Email" runat="server" CssClass="form-control"></asp:TextBox>
+        <label class="fw-bold" for="<%= pass.ClientID %>">Password</label>
+        <asp:TextBox ID="pass" TextMode="Password" runat="server" CssClass="form-control"></asp:TextBox>
+        <label class="fw-bold" for="<%= vpass.ClientID %>">Verify Password</label>
+        <asp:TextBox ID="vpass" TextMode="Password" runat="server" CssClass="form-control"></asp:TextBox>
         <div class="clearfix">
-            <input type="submit" value="Sign Up" class="btn btn-primary float-end btn-push-top-10" />
+            <asp:Button ID="btnSignup" runat="server" Text="Sign Up" CssClass="btn btn-primary float-end btn-push-top-10" OnClick="btnSignup_Click" />
         </div>
+        <asp:Panel ID="errorPanel" runat="server" Visible="false">
+            <asp:Label ID="lblErrors" runat="server" Text="Label" CssClass="error-message"></asp:Label>
+        </asp:Panel>
     </div>
 </asp:Content>

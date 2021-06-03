@@ -22,3 +22,7 @@
 .footer-space {
     margin-bottom: 100px;
 }
+
+.error-message {
+    color: red;
+}

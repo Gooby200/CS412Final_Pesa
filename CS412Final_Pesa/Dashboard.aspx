@@ -6,63 +6,55 @@
         <div class="col">
             <div class="number-info">
                 <div class="site-title">Order Count</div>
-                <div class="number-text">342</div>
+                <div class="number-text"><asp:Literal ID="litOrderCount" runat="server"></asp:Literal></div>
             </div>
         </div>
         <div class="col">
             <div class="number-info">
                 <div class="site-title">Money Collected</div>
-                <div class="number-text">$50,000</div>
+                <div class="number-text">$<asp:Literal ID="litMoneyCollected" runat="server"></asp:Literal></div>
             </div>
         </div>
         <div class="col">
             <div class="number-info">
                 <div class="site-title">Orders Completed</div>
-                <div class="number-text">136</div>
+                <div class="number-text"><asp:Literal ID="litOrdersCompleted" runat="server"></asp:Literal></div>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col">
             <div class="data-content">
-                <table class="table table-sm table-striped">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Customer</th>
-                            <th>Services</th>
-                            <th>Price</th>
-                            <th>Service Date</th>
-                            <th>Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Gaston Pesa</td>
-                            <td>Tree Trim, Mowing</td>
-                            <td>$50.00</td>
-                            <td>05/30/2021</td>
-                            <td><a href="#" class="delete-mark">X</a></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Gaston Pesa</td>
-                            <td>Mowing</td>
-                            <td>$25.00</td>
-                            <td>05/30/2021</td>
-                            <td><a href="#" class="delete-mark">X</a></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Gaston Pesa</td>
-                            <td>Cleanup</td>
-                            <td>$250.00</td>
-                            <td>05/30/2021</td>
-                            <td><a href="#" class="delete-mark">X</a></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <asp:GridView ID="gridOrderDetails" runat="server" CssClass="table table-sm table-striped" AutoGenerateColumns="false" AllowPaging="true" PageSize="10" OnRowDataBound="gridOrderDetails_RowDataBound" OnPageIndexChanging="gridOrderDetails_PageIndexChanging" OnRowDeleting="gridOrderDetails_RowDeleting">
+                    <EmptyDataTemplate>
+                        No records found.
+                    </EmptyDataTemplate>
+                    <Columns>
+                        <asp:BoundField HeaderText="ID" DataField="Id" />
+                        <asp:TemplateField HeaderText="Customer">
+                            <ItemTemplate>
+                                <asp:HiddenField ID="hdnId" runat="server" />
+                                <asp:Label ID="lblCustomerName" runat="server" Text="Label"></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Services">
+                            <ItemTemplate>
+                                <asp:Label ID="lblServices" runat="server" Text="Label"></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Price">
+                            <ItemTemplate>
+                                <asp:Label ID="lblOrderPrice" runat="server" Text="Label"></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Service Date">
+                            <ItemTemplate>
+                                <asp:Label ID="lblServiceDate" runat="server" Text="Label"></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:CommandField HeaderText="Delete" ShowDeleteButton="true" DeleteText="X" ControlStyle-CssClass="delete-mark" />
+                    </Columns>
+                </asp:GridView>
             </div>
         </div>
     </div>
