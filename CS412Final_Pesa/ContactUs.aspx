@@ -3,16 +3,16 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="form-content">
-        <label class="fw-bold" for="name">Name</label>
-        <input type="text" id="name" class="form-control" />
-        <label class="fw-bold" for="email">Email</label>
-        <input type="email" id="email" class="form-control" />
-        <label class="fw-bold" for="phone">Phone</label>
-        <input type="tel" id="phone" class="form-control" />
-        <label class="fw-bold" for="comment">Comment</label>
-        <textarea id="comment" rows="10" class="form-control"></textarea>
+        <label class="fw-bold" for="<%= name.ClientID %>">Name</label>
+        <asp:TextBox ID="name" runat="server" CssClass="form-control"></asp:TextBox>
+        <label class="fw-bold" for="<%= email.ClientID %>">Email</label>
+        <asp:TextBox ID="email" TextMode="Email" runat="server" CssClass="form-control"></asp:TextBox>
+        <label class="fw-bold" for="<%= phone.ClientID %>">Phone</label>
+        <asp:TextBox ID="phone" TextMode="Phone" runat="server" CssClass="form-control"></asp:TextBox>
+        <label class="fw-bold" for="<%= comment.ClientID %>">Comment</label>
+        <asp:TextBox ID="comment" Rows="10" TextMode="MultiLine" runat="server" CssClass="form-control"></asp:TextBox>
         <div class="d-grid">
-            <input type="submit" value="Send" class="btn btn-primary btn-push-top-10" />
+            <asp:Button ID="btnSendInfo" runat="server" Text="Send" CssClass="btn btn-primary btn-push-top-10" />
         </div>
     </div>
 </asp:Content>
