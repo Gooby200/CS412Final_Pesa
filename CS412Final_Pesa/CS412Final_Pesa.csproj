@@ -126,6 +126,7 @@
     <Content Include="Dashboard.aspx" />
     <Content Include="OrdersServices.aspx" />
     <Content Include="Logout.aspx" />
+    <Content Include="Examples\Example4.aspx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -186,6 +187,8 @@
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Repositories\Error.cs" />
+    <Compile Include="Repositories\Interfaces\IError.cs" />
     <Compile Include="SignUp.aspx.cs">
       <DependentUpon>SignUp.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -228,9 +231,17 @@
     <Compile Include="Logout.aspx.designer.cs">
       <DependentUpon>Logout.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Examples\Example4.aspx.cs">
+      <DependentUpon>Example4.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Examples\Example4.aspx.designer.cs">
+      <DependentUpon>Example4.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Examples\Scripts\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
