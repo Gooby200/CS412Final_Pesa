@@ -29,11 +29,7 @@ namespace CS412Final_Pesa {
         private readonly List<Order> _orders = new List<Order>() {
             new Order() {
                 Id = 1,
-                Customer = new User() {
-                    Id = 1,
-                    First = "Gaston",
-                    Last = "Pesa"
-                },
+                CustomerName = "Gaston Pesa",
                 ServiceDate = DateTime.Now.AddDays(-1),
                 Services = new List<Service>() {
                     new Service() {
@@ -50,11 +46,7 @@ namespace CS412Final_Pesa {
             },
             new Order() {
                 Id = 2,
-                Customer = new User() {
-                    Id = 1,
-                    First = "Gaston",
-                    Last = "Pesa"
-                },
+                CustomerName = "Gaston Pesa",
                 ServiceDate = DateTime.Now.AddDays(1),
                 Services = new List<Service>() {
                     new Service() {
@@ -66,11 +58,7 @@ namespace CS412Final_Pesa {
             },
             new Order() {
                 Id = 3,
-                Customer = new User() {
-                    Id = 1,
-                    First = "Gaston",
-                    Last = "Pesa"
-                },
+                CustomerName = "Gaston Pesa",
                 ServiceDate = DateTime.Now.AddDays(1),
                 Services = new List<Service>() {
                     new Service() {
@@ -152,7 +140,7 @@ namespace CS412Final_Pesa {
 
                 Label customerName = (Label)e.Row.FindControl("lblCustomerName");
                 //customerName.Text = order.Customer.First + " " + order.Customer.Last;
-                customerName.Text = $"{order.Customer.First} {order.Customer.Last}";
+                customerName.Text = order.CustomerName;
 
                 Label services = (Label)e.Row.FindControl("lblServices");
                 services.Text = string.Join(", ", order.Services.Select(x => x.Name));

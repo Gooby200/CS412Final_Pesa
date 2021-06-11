@@ -12,7 +12,10 @@
         <label class="fw-bold" for="<%= comment.ClientID %>">Comment</label>
         <asp:TextBox ID="comment" Rows="10" TextMode="MultiLine" runat="server" CssClass="form-control"></asp:TextBox>
         <div class="d-grid">
-            <asp:Button ID="btnSendInfo" runat="server" Text="Send" CssClass="btn btn-primary btn-push-top-10" />
+            <asp:Button ID="btnSendInfo" runat="server" Text="Send" CssClass="btn btn-primary btn-push-top-10" OnClick="btnSendInfo_Click" />
         </div>
+        <asp:Panel ID="errorPanel" runat="server" Visible="false">
+            <asp:Label ID="lblErrors" runat="server" Text="Label" CssClass="error-message"></asp:Label>
+        </asp:Panel>
     </div>
 </asp:Content>
