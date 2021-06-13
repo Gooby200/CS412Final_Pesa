@@ -1,4 +1,6 @@
-﻿using CS412Final_Pesa.Models;
+﻿using CS412Final_Pesa.BLL;
+using CS412Final_Pesa.BLL.Interfaces;
+using CS412Final_Pesa.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +10,7 @@ using System.Web.UI.WebControls;
 
 namespace CS412Final_Pesa {
     public partial class SignUpPage : System.Web.UI.Page {
+        private readonly IUserBLL _userBLL = new UserBLL();
         protected void Page_Load(object sender, EventArgs e) {
 
         }
@@ -51,6 +54,9 @@ namespace CS412Final_Pesa {
             };
 
             //TODO - add functionality to hit the database to create this user
+            User newUser = _userBLL.CreateUser(user);
+
+            Session["user"] = newUser;
 
             //TODO - Redirect the user to the login page or the employee side of the site
             Response.Redirect("Dashboard.aspx");

@@ -1,4 +1,6 @@
-﻿using CS412Final_Pesa.Models;
+﻿using CS412Final_Pesa.BLL;
+using CS412Final_Pesa.BLL.Interfaces;
+using CS412Final_Pesa.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +10,8 @@ using System.Web.UI.WebControls;
 
 namespace CS412Final_Pesa {
     public partial class DashboardPage : System.Web.UI.Page {
+        private readonly IOrderBLL _orderBLL = new OrderBLL();
+
         private readonly List<Service> _services = new List<Service>() {
             new Service() {
                 Id = 1,
@@ -26,52 +30,9 @@ namespace CS412Final_Pesa {
             }
         };
 
-        private readonly List<Order> _orders = new List<Order>() {
-            new Order() {
-                Id = 1,
-                CustomerName = "Gaston Pesa",
-                ServiceDate = DateTime.Now.AddDays(-1),
-                Services = new List<Service>() {
-                    new Service() {
-                        Id = 1,
-                        Name = "Mowing",
-                        Price = 25.00M
-                    },
-                    new Service() {
-                        Id = 3,
-                        Name = "Tree Trimming",
-                        Price = 100.00M
-                    }
-                }
-            },
-            new Order() {
-                Id = 2,
-                CustomerName = "Gaston Pesa",
-                ServiceDate = DateTime.Now.AddDays(1),
-                Services = new List<Service>() {
-                    new Service() {
-                        Id = 1,
-                        Name = "Mowing",
-                        Price = 25.00M
-                    }
-                }
-            },
-            new Order() {
-                Id = 3,
-                CustomerName = "Gaston Pesa",
-                ServiceDate = DateTime.Now.AddDays(1),
-                Services = new List<Service>() {
-                    new Service() {
-                        Id = 2,
-                        Name = "Cleanup",
-                        Price = 250.00M
-                    }
-                }
-            }
-        };
         protected void Page_Load(object sender, EventArgs e) {
             if (Page.IsPostBack == false) {
-                ViewState["orders"] = _orders;
+                ViewState["orders"] = _orderBLL.GetOrders();
 
                 SetPageData();
                 BindOrderDetailsGrid();
@@ -81,9 +42,11 @@ namespace CS412Final_Pesa {
         }
 
         private void SetPageData() {
+            User user = (User)Session["user"];
             litOrderCount.Text = GetOrderCount().ToString();
-            litMoneyCollected.Text = GetMoneyCollected().ToString();
+            litMoneyCollected.Text = _orderBLL.GetMoneyCollected().ToString();
             litOrdersCompleted.Text = GetOrdersCompleted().ToString();
+            loggedInUserName.Text = user?.First + " " + user?.Last;
         }
 
         private void BindOrderDetailsGrid() {
@@ -93,15 +56,6 @@ namespace CS412Final_Pesa {
 
         private int GetOrderCount() {
             return ((List<Order>)ViewState["orders"]).Count();
-        }
-
-        private decimal GetMoneyCollected() {
-            decimal moneyCollected = 0;
-            foreach (Order order in ((List<Order>)ViewState["orders"]))
-                if (order.ServiceDate < DateTime.Now)
-                    moneyCollected += order.Total;
-
-            return moneyCollected;
         }
 
         private int GetOrdersCompleted() {

@@ -8,7 +8,8 @@ using System.Web.UI.WebControls;
 namespace CS412Final_Pesa {
     public partial class LogoutPage : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
-
+            Session.Abandon();
+            Response.Redirect("Login.aspx");
         }
     }
 }

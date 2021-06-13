@@ -4,6 +4,11 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="row">
         <div class="col">
+            Welcome, <asp:Literal ID="loggedInUserName" runat="server"></asp:Literal>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
             <div class="number-info">
                 <div class="site-title">Order Count</div>
                 <div class="number-text"><asp:Literal ID="litOrderCount" runat="server"></asp:Literal></div>

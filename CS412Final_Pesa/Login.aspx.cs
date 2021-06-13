@@ -1,4 +1,6 @@
-﻿using CS412Final_Pesa.Models;
+﻿using CS412Final_Pesa.BLL;
+using CS412Final_Pesa.BLL.Interfaces;
+using CS412Final_Pesa.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +10,7 @@ using System.Web.UI.WebControls;
 
 namespace CS412Final_Pesa {
     public partial class LoginPage : System.Web.UI.Page {
+        private readonly IUserBLL _userBLL = new UserBLL();
         protected void Page_Load(object sender, EventArgs e) {
 
         }
@@ -31,18 +34,10 @@ namespace CS412Final_Pesa {
                 //  do the data access and then do the mapping in the data layer as well.
                 //  we will want to access the data layer through the repository class
 
-                bool matchedInDatabase = false;
-                if (email.Text.ToLower() == "rgpesa1@neiu.edu" && pass.Text == "test") {
-                    matchedInDatabase = true;
-                }
+                User user = _userBLL.GetUser(email.Text.Trim(), pass.Text);
 
-                if (matchedInDatabase) {
-                    User user = new User() {
-                        First = "Gaston",
-                        Last = "Pesa",
-                        Email = "rgpesa1@neiu.edu",
-                        Password = "test"
-                    };
+                if (user != null) {
+                    Session["user"] = user;
 
                     //TODO - Redirect the user to the login page or the employee side of the site
                     Response.Redirect("Dashboard.aspx");
