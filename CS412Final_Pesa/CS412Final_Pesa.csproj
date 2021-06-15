@@ -108,6 +108,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Examples\ImageUploadExample.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -171,6 +172,13 @@
     <Compile Include="BLL\UserBLL.cs" />
     <Compile Include="DAL\OrderDAL.cs" />
     <Compile Include="DAL\UserDAL.cs" />
+    <Compile Include="Examples\ImageUploadExample.aspx.cs">
+      <DependentUpon>ImageUploadExample.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Examples\ImageUploadExample.aspx.designer.cs">
+      <DependentUpon>ImageUploadExample.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -252,6 +260,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Examples\Scripts\" />
+    <Folder Include="Examples\user_images\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
