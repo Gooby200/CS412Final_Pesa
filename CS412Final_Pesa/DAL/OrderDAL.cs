@@ -53,5 +53,22 @@ namespace CS412Final_Pesa.DAL {
         public static List<Order> GetOrders() {
             return _orders;
         }
+
+        public static long GetOrderCount() {
+            return _orders.Count();
+        }
+
+        public static List<Order> GetCompletedOrders() {
+            return _orders.Where(x => x.ServiceDate < DateTime.Now).ToList();
+        }
+
+        public static Order CreateOrder(Order order) {
+            //get the latest id from the orders
+            Order lastOrder = _orders.LastOrDefault();
+            order.Id = lastOrder.Id + 1;
+            _orders.Add(order);
+
+            return order;
+        }
     }
 }

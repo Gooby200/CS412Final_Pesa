@@ -7,5 +7,8 @@ using System.Web;
 namespace CS412Final_Pesa.Repositories.Interfaces {
     public interface IOrderRepository {
         List<Order> GetOrders();
+        long GetOrderCount();
+        List<Order> GetCompletedOrders();
+        Order CreateOrder(Order order);
     }
 }

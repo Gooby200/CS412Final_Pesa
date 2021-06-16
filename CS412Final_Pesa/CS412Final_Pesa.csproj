@@ -167,10 +167,13 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="BLL\Interfaces\IOrderBLL.cs" />
+    <Compile Include="BLL\Interfaces\IServiceBLL.cs" />
     <Compile Include="BLL\Interfaces\IUserBLL.cs" />
     <Compile Include="BLL\OrderBLL.cs" />
+    <Compile Include="BLL\ServiceBLL.cs" />
     <Compile Include="BLL\UserBLL.cs" />
     <Compile Include="DAL\OrderDAL.cs" />
+    <Compile Include="DAL\ServiceDAL.cs" />
     <Compile Include="DAL\UserDAL.cs" />
     <Compile Include="Examples\ImageUploadExample.aspx.cs">
       <DependentUpon>ImageUploadExample.aspx</DependentUpon>
@@ -204,8 +207,10 @@
     <Compile Include="Repositories\Error.cs" />
     <Compile Include="Repositories\Interfaces\IError.cs" />
     <Compile Include="Repositories\Interfaces\IOrderRepository.cs" />
+    <Compile Include="Repositories\Interfaces\IServiceRepository.cs" />
     <Compile Include="Repositories\Interfaces\IUserRepository.cs" />
     <Compile Include="Repositories\OrderRepository.cs" />
+    <Compile Include="Repositories\ServiceRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="SignUp.aspx.cs">
       <DependentUpon>SignUp.aspx</DependentUpon>

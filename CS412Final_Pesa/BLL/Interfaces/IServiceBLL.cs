@@ -6,8 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace CS412Final_Pesa.BLL.Interfaces {
-    public interface IUserBLL {
-        User GetUser(string email, string password);
-        User CreateUser(User user);
+    public interface IServiceBLL {
+        List<Service> GetServices();
+        Service CreateService(Service service);
     }
 }

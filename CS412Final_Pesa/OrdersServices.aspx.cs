@@ -1,17 +1,18 @@
-﻿using CS412Final_Pesa.Models;
+﻿using CS412Final_Pesa.BLL;
+using CS412Final_Pesa.BLL.Interfaces;
+using CS412Final_Pesa.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace CS412Final_Pesa {
     public partial class OrdersServicesPage : System.Web.UI.Page {
+        private readonly IOrderBLL _orderBLL = new OrderBLL();
+        private readonly IServiceBLL _serviceBLL = new ServiceBLL();
+
         protected void Page_Load(object sender, EventArgs e) {
             // load all of the services into here
-            List<Service> services = GetServices();
-            foreach (Service s in services) {
+            foreach (Service s in _serviceBLL.GetServices()) {
                 ListItem listItem = new ListItem($"{s.Name} - {s.Price}", s.Id.ToString());
                 orderServiceList.Items.Add(listItem);
             }
@@ -28,46 +29,24 @@ namespace CS412Final_Pesa {
             }
 
             //do validation here before we create our order to make sure everything is good
-            CreateOrder(customerName.Text, DateTime.Parse(serviceDate.Text), serviceIds);
+            Order o = new Order() {
+                CustomerName = customerName.Text,
+                ServiceDate = DateTime.Parse(serviceDate.Text)
+            };
+            _orderBLL.CreateOrder(o, serviceIds);
         }
 
         protected void createService_Click(object sender, EventArgs e) {
-            decimal price = 0;
+            decimal price = 0M;
 
             //try to convert the price to a decimal and if successful, lets create the service
             if (decimal.TryParse(servicePrice.Text, out price)) {
-                CreateService(serviceName.Text, price);
+                Service service = new Service() {
+                    Name = serviceName.Text,
+                    Price = price
+                };
+                _serviceBLL.CreateService(service);
             }
-        }
-
-        private bool CreateOrder(string customerName, DateTime serviceDate, List<long> serviceIds) {
-            List<Service> services = new List<Service>();
-            foreach (long serviceId in serviceIds) {
-                services.Add(new Service() { Id = serviceId });
-            }
-
-            Order o = new Order() {
-                CustomerName = customerName,
-                ServiceDate = serviceDate,
-                Services = services
-            };
-
-            //hit up the database to save this order information
-            return false;
-        }
-
-        private bool CreateService(string name, decimal price) {
-            Service service = new Service() {
-                Name = name,
-                Price = price
-            };
-
-            return false;
-        }
-
-        private List<Service> GetServices() {
-            // get a list of services here from the database at some point
-            return new List<Service>();
         }
     }
 }

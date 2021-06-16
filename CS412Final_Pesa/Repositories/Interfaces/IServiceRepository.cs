@@ -6,8 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace CS412Final_Pesa.Repositories.Interfaces {
-    public interface IUserRepository {
-        User GetUser(string email, string password);
-        User CreateUser(User user);
+    public interface IServiceRepository {
+        List<Service> GetServices();
+        Service CreateService(Service service);
     }
 }
