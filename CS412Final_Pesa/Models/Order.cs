@@ -10,6 +10,7 @@ namespace CS412Final_Pesa.Models {
         public string CustomerName { get; set; }
         public DateTime ServiceDate { get; set; }
         public List<Service> Services { get; set; }
+        public decimal PaidAmount { get; set; }
         public decimal Total => Services.Sum(x => x.Price);
     }
 }
