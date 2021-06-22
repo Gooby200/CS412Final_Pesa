@@ -12,9 +12,11 @@ namespace CS412Final_Pesa {
 
         protected void Page_Load(object sender, EventArgs e) {
             // load all of the services into here
-            foreach (Service s in _serviceBLL.GetServices()) {
-                ListItem listItem = new ListItem($"{s.Name} - {s.Price}", s.Id.ToString());
-                orderServiceList.Items.Add(listItem);
+            if (!Page.IsPostBack) {
+                foreach (Service s in _serviceBLL.GetServices()) {
+                    ListItem listItem = new ListItem($"{s.Name} - {s.Price}", s.Id.ToString());
+                    orderServiceList.Items.Add(listItem);
+                }
             }
         }
 
@@ -31,7 +33,8 @@ namespace CS412Final_Pesa {
             //do validation here before we create our order to make sure everything is good
             Order o = new Order() {
                 CustomerName = customerName.Text,
-                ServiceDate = DateTime.Parse(serviceDate.Text)
+                ServiceDate = DateTime.Parse(serviceDate.Text),
+                OrderedBy = (User)Session["user"]
             };
             _orderBLL.CreateOrder(o, serviceIds);
         }

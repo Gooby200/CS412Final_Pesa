@@ -10,5 +10,6 @@ namespace CS412Final_Pesa.Repositories.Interfaces {
         long GetOrderCount();
         List<Order> GetCompletedOrders();
         Order CreateOrder(Order order);
+        bool DeleteOrder(long orderId);
     }
 }

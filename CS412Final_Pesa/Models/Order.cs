@@ -11,6 +11,10 @@ namespace CS412Final_Pesa.Models {
         public DateTime ServiceDate { get; set; }
         public List<Service> Services { get; set; }
         public decimal PaidAmount { get; set; }
-        public decimal Total => Services.Sum(x => x.Price);
+        public User OrderedBy { get; set; }
+        public decimal Total => Services == null ? 0M : Services.Sum(x => x.Price);
+        public Order() {
+            Services = new List<Service>();
+        }
     }
 }

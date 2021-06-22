@@ -5,7 +5,6 @@ using CS412Final_Pesa.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace CS412Final_Pesa.BLL {
     public class OrderBLL : IOrderBLL {
@@ -18,25 +17,27 @@ namespace CS412Final_Pesa.BLL {
         }
 
         public Order CreateOrder(Order order, List<long> serviceIds) {
-            // get the services that the user selected
-            List<Service> services = _serviceRepository.GetServices().Where(x => serviceIds.Contains(x.Id)).ToList();
-
-            //assign those services to the order
-            order.Services = services;
-
             // save the order
-            return _orderRepository.CreateOrder(order);
+            order = _orderRepository.CreateOrder(order);
+
+            //associate order with the services
+            _serviceRepository.AssociateOrderToServices(order.Id, serviceIds);
+
+            order = AssociateServicesWithOrders(new List<Order> { order }).FirstOrDefault();
+
+            return order;
         }
 
         public List<Order> GetCompletedOrders() {
-            return _orderRepository.GetCompletedOrders();
+            List<Order> orders = AssociateServicesWithOrders(_orderRepository.GetCompletedOrders());
+            return orders;
         }
 
         public decimal GetMoneyCollected() {
             decimal moneyCollected = 0;
             foreach (Order order in _orderRepository.GetOrders())
                 if (order.ServiceDate < DateTime.Now)
-                    moneyCollected += order.Total;
+                    moneyCollected += order.PaidAmount;
 
             return moneyCollected;
 
@@ -48,7 +49,32 @@ namespace CS412Final_Pesa.BLL {
         }
 
         public List<Order> GetOrders() {
-            return _orderRepository.GetOrders();
+            List<Order> orders = AssociateServicesWithOrders(_orderRepository.GetOrders());            
+            return orders;
+        }
+
+        public bool DeleteOrder(long orderId) {
+            //delete the orderservices
+            bool orderServicesDeleted = _serviceRepository.DeleteOrderServices(orderId);
+
+            //delete the order
+            bool orderDeleted = _orderRepository.DeleteOrder(orderId);
+
+            return orderServicesDeleted && orderDeleted;
+        }
+
+        private List<Order> AssociateServicesWithOrders(List<Order> orders) {
+            List<OrderServices> orderServices = _serviceRepository.GetOrderServices(orders.Select(x => x.Id).ToList());
+
+            foreach (OrderServices os in orderServices) {
+                Order o = orders.FirstOrDefault(x => x.Id == os.OrderId);
+                if (o.Services == null)
+                    o.Services = new List<Service>();
+
+                orders.FirstOrDefault(x => x.Id == os.OrderId).Services.Add(os.Service);
+            }
+
+            return orders;
         }
     }
 }

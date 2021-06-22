@@ -9,5 +9,8 @@ namespace CS412Final_Pesa.Repositories.Interfaces {
     public interface IServiceRepository {
         List<Service> GetServices();
         Service CreateService(Service service);
+        List<OrderServices> GetOrderServices(List<long> orderIds);
+        void AssociateOrderToServices(long orderId, List<long> serviceIds);
+        bool DeleteOrderServices(long orderId);
     }
 }

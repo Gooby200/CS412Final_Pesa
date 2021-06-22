@@ -46,7 +46,8 @@ namespace CS412Final_Pesa {
             if (long.TryParse(hdnId.Value, out Id)) {
                 Order order = ((List<Order>)ViewState["orders"]).FirstOrDefault(x => x.Id == Id);
                 if (order != null) {
-                    ((List<Order>)ViewState["orders"]).Remove(order);
+                    _orderBLL.DeleteOrder(order.Id);
+                    ViewState["orders"] = _orderBLL.GetOrders();
 
                     SetPageData();
                     BindOrderDetailsGrid();
