@@ -1,73 +1,124 @@
 ﻿using CS412Final_Pesa.Models;
+using CS412Final_Pesa.Repositories;
+using CS412Final_Pesa.Repositories.Interfaces;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Configuration;
 
 namespace CS412Final_Pesa.DAL {
     public static class OrderDAL {
-        private static List<Order> _orders = new List<Order>() {
-            new Order() {
-                Id = 1,
-                CustomerName = "Gaston Pesa",
-                ServiceDate = DateTime.Now.AddDays(-1),
-                Services = new List<Service>() {
-                    new Service() {
-                        Id = 1,
-                        Name = "Mowing",
-                        Price = 25.00M
-                    },
-                    new Service() {
-                        Id = 3,
-                        Name = "Tree Trimming",
-                        Price = 100.00M
-                    }
-                }
-            },
-            new Order() {
-                Id = 2,
-                CustomerName = "Gaston Pesa",
-                ServiceDate = DateTime.Now.AddDays(1),
-                Services = new List<Service>() {
-                    new Service() {
-                        Id = 1,
-                        Name = "Mowing",
-                        Price = 25.00M
-                    }
-                }
-            },
-            new Order() {
-                Id = 3,
-                CustomerName = "Gaston Pesa",
-                ServiceDate = DateTime.Now.AddDays(1),
-                Services = new List<Service>() {
-                    new Service() {
-                        Id = 2,
-                        Name = "Cleanup",
-                        Price = 250.00M
+        private readonly static IError _error = new Error();
+        public static List<Order> GetOrders() {
+            List<Order> orders = new List<Order>();
+            string sql = "SELECT * FROM Orders";
+            using (MySqlConnection conn = new MySqlConnection(WebConfigurationManager.AppSettings["connString"])) {
+                using (MySqlCommand cmd = new MySqlCommand(sql, conn)) {
+                    try {
+                        cmd.Connection.Open();
+                        using (MySqlDataReader reader = cmd.ExecuteReader()) {
+                            if (reader.HasRows) {
+                                while (reader.Read()) {
+                                    orders.Add(new Order() {
+                                        CustomerName = reader.GetString("CustomerName"),
+                                        Id = reader.GetInt64("Id"),
+                                        PaidAmount = reader.GetDecimal("PaidAmount"),
+                                        ServiceDate = reader.GetDateTime("ServiceDate"),
+                                    });
+                                }
+                            }
+                        }
+                    } catch (Exception ex) {
+                        _error.Log(ex);
                     }
                 }
             }
-        };
-
-        public static List<Order> GetOrders() {
-            return _orders;
+            return orders;
         }
 
         public static long GetOrderCount() {
-            return _orders.Count();
+            long count = 0;
+            string sql = "SELECT COUNT(*) FROM Orders";
+            using (MySqlConnection conn = new MySqlConnection(WebConfigurationManager.AppSettings["connString"])) {
+                using (MySqlCommand cmd = new MySqlCommand(sql, conn)) {
+                    try {
+                        cmd.Connection.Open();
+                        count = (long)cmd.ExecuteScalar();
+                    } catch (Exception ex) {
+                        _error.Log(ex);
+                    }
+                }
+            }
+            return count;
         }
 
         public static List<Order> GetCompletedOrders() {
-            return _orders.Where(x => x.ServiceDate < DateTime.Now).ToList();
+            List<Order> orders = new List<Order>();
+            string sql = "SELECT * FROM Orders WHERE ServiceDate < NOW()";
+            using (MySqlConnection conn = new MySqlConnection(WebConfigurationManager.AppSettings["connString"])) {
+                using (MySqlCommand cmd = new MySqlCommand(sql, conn)) {
+                    try {
+                        cmd.Connection.Open();
+                        using (MySqlDataReader reader = cmd.ExecuteReader()) {
+                            if (reader.HasRows) {
+                                while (reader.Read()) {
+                                    orders.Add(new Order() {
+                                        CustomerName = reader.GetString("CustomerName"),
+                                        Id = reader.GetInt64("Id"),
+                                        PaidAmount = reader.GetDecimal("PaidAmount"),
+                                        ServiceDate = reader.GetDateTime("ServiceDate"),
+                                    });
+                                }
+                            }
+                        }
+                    } catch (Exception ex) {
+                        _error.Log(ex);
+                    }
+                }
+            }
+            return orders;
+        }
+
+        public static bool DeleteOrder(long orderId) {
+            string sql = @"DELETE FROM Orders WHERE Id=@OrderId";
+            using (MySqlConnection conn = new MySqlConnection(WebConfigurationManager.AppSettings["connString"])) {
+                using (MySqlCommand cmd = new MySqlCommand(sql, conn)) {
+                    try {
+                        cmd.Connection.Open();
+                        cmd.Parameters.AddWithValue("@OrderId", orderId);
+                        cmd.ExecuteNonQuery();
+                    } catch (Exception ex) {
+                        _error.Log(ex);
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
 
         public static Order CreateOrder(Order order) {
-            //get the latest id from the orders
-            Order lastOrder = _orders.LastOrDefault();
-            order.Id = lastOrder.Id + 1;
-            _orders.Add(order);
+            string sql = @"INSERT INTO Orders (CustomerName, ServiceDate, PaidAmount, OrderedBy) VALUES (@CustomerName, @ServiceDate, @PaidAmount, @OrderedBy);
+                            SELECT LAST_INSERT_ID();";
+            using (MySqlConnection conn = new MySqlConnection(WebConfigurationManager.AppSettings["connString"])) {
+                using (MySqlCommand cmd = new MySqlCommand(sql, conn)) {
+                    try {
+                        cmd.Connection.Open();
+                        cmd.Parameters.AddWithValue("@CustomerName", order.CustomerName);
+                        cmd.Parameters.AddWithValue("@ServiceDate", order.ServiceDate);
+                        cmd.Parameters.AddWithValue("@PaidAmount", order.PaidAmount);
+                        cmd.Parameters.AddWithValue("@OrderedBy", order.OrderedBy.Id);
 
+                        string o = cmd.ExecuteScalar().ToString();
+                        long id = 0;
+                        long.TryParse(o, out id);
+                        order.Id = id;
+                    } catch (Exception ex) {
+                        _error.Log(ex);
+                    }
+                }
+            }
             return order;
         }
     }

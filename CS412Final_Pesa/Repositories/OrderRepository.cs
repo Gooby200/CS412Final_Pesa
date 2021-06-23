@@ -12,6 +12,10 @@ namespace CS412Final_Pesa.Repositories {
             return OrderDAL.CreateOrder(order);
         }
 
+        public bool DeleteOrder(long orderId) {
+            return OrderDAL.DeleteOrder(orderId);
+        }
+
         public List<Order> GetCompletedOrders() {
             return OrderDAL.GetCompletedOrders();
         }
