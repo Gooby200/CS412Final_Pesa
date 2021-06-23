@@ -15,7 +15,7 @@ namespace CS412Final_Pesa.BLL {
         }
 
         public Service CreateService(Service service) {
-            throw new NotImplementedException();
+            return _serviceRepository.CreateService(service);
         }
 
         public List<Service> GetServices() {

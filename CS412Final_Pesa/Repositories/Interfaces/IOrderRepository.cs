@@ -6,10 +6,11 @@ using System.Web;
 
 namespace CS412Final_Pesa.Repositories.Interfaces {
     public interface IOrderRepository {
-        List<Order> GetOrders();
+        List<Order> GetOrders(long userId = -1);
         long GetOrderCount();
         List<Order> GetCompletedOrders();
         Order CreateOrder(Order order);
         bool DeleteOrder(long orderId);
+        List<long> GetOrderedByUserIds(List<long> orderIds);
     }
 }

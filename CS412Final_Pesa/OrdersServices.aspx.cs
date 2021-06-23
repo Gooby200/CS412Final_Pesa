@@ -11,12 +11,20 @@ namespace CS412Final_Pesa {
         private readonly IServiceBLL _serviceBLL = new ServiceBLL();
 
         protected void Page_Load(object sender, EventArgs e) {
-            // load all of the services into here
             if (!Page.IsPostBack) {
-                foreach (Service s in _serviceBLL.GetServices()) {
-                    ListItem listItem = new ListItem($"{s.Name} - {s.Price}", s.Id.ToString());
-                    orderServiceList.Items.Add(listItem);
-                }
+                // load all of the services into here
+                rebindServices();
+            }
+        }
+
+        private void rebindServices() {
+            //orderServiceList.DataSource = _serviceBLL.GetServices();
+            //orderServiceList.DataBind();
+
+            orderServiceList.Items.Clear();
+            foreach (Service s in _serviceBLL.GetServices()) {
+                ListItem listItem = new ListItem($"{s.Name} - {s.Price}", s.Id.ToString());
+                orderServiceList.Items.Add(listItem);
             }
         }
 
@@ -48,7 +56,12 @@ namespace CS412Final_Pesa {
                     Name = serviceName.Text,
                     Price = price
                 };
-                _serviceBLL.CreateService(service);
+                service = _serviceBLL.CreateService(service);
+                if (service.Id > 0) {
+                    serviceName.Text = "";
+                    servicePrice.Text = "";
+                    rebindServices();
+                }
             }
         }
     }

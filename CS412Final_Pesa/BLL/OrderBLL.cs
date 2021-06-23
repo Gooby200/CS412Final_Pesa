@@ -10,10 +10,12 @@ namespace CS412Final_Pesa.BLL {
     public class OrderBLL : IOrderBLL {
         public readonly IOrderRepository _orderRepository;
         public readonly IServiceRepository _serviceRepository;
+        public readonly IUserRepository _userRepository;
 
         public OrderBLL() {
             _orderRepository = new OrderRepository();
             _serviceRepository = new ServiceRepository();
+            _userRepository = new UserRepository();
         }
 
         public Order CreateOrder(Order order, List<long> serviceIds) {
@@ -24,12 +26,14 @@ namespace CS412Final_Pesa.BLL {
             _serviceRepository.AssociateOrderToServices(order.Id, serviceIds);
 
             order = AssociateServicesWithOrders(new List<Order> { order }).FirstOrDefault();
+            AssociateUsersWithOrders(new List<Order>() { order });
 
             return order;
         }
 
         public List<Order> GetCompletedOrders() {
             List<Order> orders = AssociateServicesWithOrders(_orderRepository.GetCompletedOrders());
+            AssociateUsersWithOrders(orders);
             return orders;
         }
 
@@ -40,16 +44,15 @@ namespace CS412Final_Pesa.BLL {
                     moneyCollected += order.PaidAmount;
 
             return moneyCollected;
-
-            //return _orderRepository.GetOrders().Where(x => x.ServiceDate < DateTime.Now).Sum(x => x.Total);
         }
 
         public long GetOrderCount() {
             return _orderRepository.GetOrderCount();
         }
 
-        public List<Order> GetOrders() {
-            List<Order> orders = AssociateServicesWithOrders(_orderRepository.GetOrders());            
+        public List<Order> GetOrders(long userId = -1) {
+            List<Order> orders = AssociateServicesWithOrders(_orderRepository.GetOrders(userId));
+            AssociateUsersWithOrders(orders);
             return orders;
         }
 
@@ -75,6 +78,18 @@ namespace CS412Final_Pesa.BLL {
             }
 
             return orders;
+        }
+
+        private void AssociateUsersWithOrders(List<Order> orders) {
+            //get list of users that belong to the orders
+            List<User> users = _userRepository.GetUsers(orders.Select(x => x.OrderedById).ToList());
+
+            foreach (Order o in orders) {
+                User u = users.FirstOrDefault(x => x.Id == o.OrderedById);
+                if (u != null) {
+                    o.OrderedBy = u;
+                }
+            }
         }
     }
 }

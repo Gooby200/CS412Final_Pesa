@@ -11,13 +11,17 @@ using System.Web.Configuration;
 namespace CS412Final_Pesa.DAL {
     public static class OrderDAL {
         private readonly static IError _error = new Error();
-        public static List<Order> GetOrders() {
+        public static List<Order> GetOrders(long userId = -1) {
             List<Order> orders = new List<Order>();
             string sql = "SELECT * FROM Orders";
+            if (userId > -1) {
+                sql += " WHERE OrderedBy=@UserId";
+            }
             using (MySqlConnection conn = new MySqlConnection(WebConfigurationManager.AppSettings["connString"])) {
                 using (MySqlCommand cmd = new MySqlCommand(sql, conn)) {
                     try {
                         cmd.Connection.Open();
+                        cmd.Parameters.AddWithValue("@UserId", userId);
                         using (MySqlDataReader reader = cmd.ExecuteReader()) {
                             if (reader.HasRows) {
                                 while (reader.Read()) {
@@ -26,6 +30,7 @@ namespace CS412Final_Pesa.DAL {
                                         Id = reader.GetInt64("Id"),
                                         PaidAmount = reader.GetDecimal("PaidAmount"),
                                         ServiceDate = reader.GetDateTime("ServiceDate"),
+                                        OrderedById = reader.GetInt64("OrderedBy")
                                     });
                                 }
                             }
@@ -36,6 +41,29 @@ namespace CS412Final_Pesa.DAL {
                 }
             }
             return orders;
+        }
+
+        public static List<long> GetOrderedByUserIds(List<long> orderIds) {
+            List<long> userIds = new List<long>();
+            string sql = "SELECT OrderedBy FROM Orders WHERE ID IN (#OrderIds)";
+            sql = sql.Replace("#OrderIds", string.Join(", ", orderIds));
+            using (MySqlConnection conn = new MySqlConnection(WebConfigurationManager.AppSettings["connString"])) {
+                using (MySqlCommand cmd = new MySqlCommand(sql, conn)) {
+                    try {
+                        cmd.Connection.Open();
+                        using (MySqlDataReader reader = cmd.ExecuteReader()) {
+                            if (reader.HasRows) {
+                                while (reader.Read()) {
+                                    userIds.Add(reader.GetInt64("OrderedBy"));
+                                }
+                            }
+                        }
+                    } catch (Exception ex) {
+                        _error.Log(ex);
+                    }
+                }
+            }
+            return userIds;
         }
 
         public static long GetOrderCount() {
@@ -69,6 +97,7 @@ namespace CS412Final_Pesa.DAL {
                                         Id = reader.GetInt64("Id"),
                                         PaidAmount = reader.GetDecimal("PaidAmount"),
                                         ServiceDate = reader.GetDateTime("ServiceDate"),
+                                        OrderedById = reader.GetInt64("OrderedBy")
                                     });
                                 }
                             }

@@ -12,7 +12,7 @@
                 <label class="fw-bold" for="<%= serviceDate.ClientID %>">Service Date</label>
                 <asp:TextBox ID="serviceDate" CssClass="form-control" TextMode="Date" runat="server"></asp:TextBox>
                 <label class="fw-bold">Services</label>
-                <asp:CheckBoxList ID="orderServiceList" runat="server" CssClass="form-check"></asp:CheckBoxList>
+                <asp:CheckBoxList ID="orderServiceList" runat="server" CssClass="form-check" AutoPostBack="true"></asp:CheckBoxList>
                 <div runat="server" visible="<%# orderServiceList.Items.Count <= 0 %>">
                     None
                 </div>

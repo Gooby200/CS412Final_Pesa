@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace CS412Final_Pesa.BLL.Interfaces {
     public interface IOrderBLL {
         decimal GetMoneyCollected();
-        List<Order> GetOrders();
+        List<Order> GetOrders(long userId = -1);
         long GetOrderCount();
         List<Order> GetCompletedOrders();
         Order CreateOrder(Order order, List<long> serviceIds);

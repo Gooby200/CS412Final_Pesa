@@ -39,6 +39,26 @@ namespace CS412Final_Pesa {
                 errors.Add("Both passwords must match.");
             }
 
+            if (string.IsNullOrWhiteSpace(phone.Text)) {
+                errors.Add("You must provide phone number.");
+            }
+
+            if (string.IsNullOrWhiteSpace(street.Text)) {
+                errors.Add("You must provide a street.");
+            }
+
+            if (string.IsNullOrWhiteSpace(city.Text)) {
+                errors.Add("You must provide a city.");
+            }
+
+            if (string.IsNullOrWhiteSpace(state.Text)) {
+                errors.Add("You must provide a state.");
+            }
+
+            if (string.IsNullOrWhiteSpace(zip.Text)) {
+                errors.Add("You must provide a zip.");
+            }
+
             if (errors.Count > 0) {
                 errorPanel.Visible = true;
                 lblErrors.Text = string.Join("<br />", errors);
@@ -47,19 +67,28 @@ namespace CS412Final_Pesa {
 
             //everything passed correctly, so lets create the user object
             User user = new User() {
-                First = first.Text,
-                Last = last.Text,
-                Email = email.Text,
-                Password = pass.Text
+                First = first.Text.Trim(),
+                Last = last.Text.Trim(),
+                Email = email.Text.Trim(),
+                Password = pass.Text,
+                Phone = phone.Text,
+                Address = new Address() {
+                    Address1 = street.Text.Trim(),
+                    City = city.Text.Trim(),
+                    State = state.Text.Trim(),
+                    Zip = zip.Text.Trim()
+                }
             };
 
             //TODO - add functionality to hit the database to create this user
             User newUser = _userBLL.CreateUser(user);
+            if (newUser != null) {
+                Session["user"] = newUser;
+                Response.Redirect("Dashboard.aspx");
+            }
 
-            Session["user"] = newUser;
-
-            //TODO - Redirect the user to the login page or the employee side of the site
-            Response.Redirect("Dashboard.aspx");
+            errorPanel.Visible = true;
+            lblErrors.Text = "User was not created. Please check your inputs and try again.";
         }
     }
 }
