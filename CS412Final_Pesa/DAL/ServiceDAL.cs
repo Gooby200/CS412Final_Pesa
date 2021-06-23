@@ -11,26 +11,31 @@ using System.Web.Configuration;
 namespace CS412Final_Pesa.DAL {
     public static class ServiceDAL {
         private readonly static IError _error = new Error();
-        private static List<Service> _services = new List<Service>() {
-            new Service() {
-                Id = 1,
-                Name = "Mowing",
-                Price = 25.00M
-            },
-            new Service() {
-                Id = 2,
-                Name = "Cleanup",
-                Price = 250.00M
-            },
-            new Service() {
-                Id = 3,
-                Name = "Tree Trimming",
-                Price = 100.00M
-            }
-        };
 
         public static List<Service> GetServices() {
-            return _services;
+            List<Service> services = new List<Service>();
+            string sql = "SELECT * FROM Services";
+            using (MySqlConnection conn = new MySqlConnection(WebConfigurationManager.AppSettings["connString"])) {
+                using (MySqlCommand cmd = new MySqlCommand(sql, conn)) {
+                    try {
+                        cmd.Connection.Open();
+                        using (MySqlDataReader reader = cmd.ExecuteReader()) {
+                            if (reader.HasRows) {
+                                while (reader.Read()) {
+                                    services.Add(new Service() {
+                                        Id = reader.GetInt64("Id"),
+                                        Name = reader.GetString("Name"),
+                                        Price = reader.GetDecimal("Price")
+                                    });
+                                }
+                            }
+                        }
+                    } catch (Exception ex) {
+                        _error.Log(ex);
+                    }
+                }
+            }
+            return services;
         }
 
         public static List<OrderServices> GetOrderServices(List<long> orderIds) {
@@ -70,11 +75,24 @@ namespace CS412Final_Pesa.DAL {
         }
 
         public static Service CreateService(Service service) {
-            //get the latest id from the services
-            Service lastService = _services.LastOrDefault();
-            service.Id = lastService.Id + 1;
-            _services.Add(service);
+            string sql = @"INSERT INTO Services (Name, Price) VALUES (@Name, @Price);
+                            SELECT LAST_INSERT_ID();";
+            using (MySqlConnection conn = new MySqlConnection(WebConfigurationManager.AppSettings["connString"])) {
+                using (MySqlCommand cmd = new MySqlCommand(sql, conn)) {
+                    try {
+                        cmd.Connection.Open();
+                        cmd.Parameters.AddWithValue("@Name", service.Name);
+                        cmd.Parameters.AddWithValue("@Price", service.Price);
 
+                        string o = cmd.ExecuteScalar().ToString();
+                        long id = 0;
+                        long.TryParse(o, out id);
+                        service.Id = id;
+                    } catch (Exception ex) {
+                        _error.Log(ex);
+                    }
+                }
+            }
             return service;
         }
 

@@ -7,8 +7,18 @@
         <asp:TextBox ID="first" runat="server" CssClass="form-control"></asp:TextBox>
         <label class="fw-bold" for="<%= last.ClientID %>">Last Name</label>
         <asp:TextBox ID="last" runat="server" CssClass="form-control"></asp:TextBox>
+        <label class="fw-bold" for="<%= phone.ClientID %>">Phone</label>
+        <asp:TextBox ID="phone" TextMode="Phone" runat="server" CssClass="form-control"></asp:TextBox>
         <label class="fw-bold" for="<%= email.ClientID %>">Email</label>
         <asp:TextBox ID="email" TextMode="Email" runat="server" CssClass="form-control"></asp:TextBox>
+        <label class="fw-bold" for="<%= street.ClientID %>">Street</label>
+        <asp:TextBox ID="street" runat="server" CssClass="form-control"></asp:TextBox>
+        <label class="fw-bold" for="<%= city.ClientID %>">City</label>
+        <asp:TextBox ID="city" runat="server" CssClass="form-control"></asp:TextBox>
+        <label class="fw-bold" for="<%= state.ClientID %>">State</label>
+        <asp:TextBox ID="state" runat="server" CssClass="form-control"></asp:TextBox>
+        <label class="fw-bold" for="<%= zip.ClientID %>">Zip</label>
+        <asp:TextBox ID="zip" runat="server" CssClass="form-control"></asp:TextBox>
         <label class="fw-bold" for="<%= pass.ClientID %>">Password</label>
         <asp:TextBox ID="pass" TextMode="Password" runat="server" CssClass="form-control"></asp:TextBox>
         <label class="fw-bold" for="<%= vpass.ClientID %>">Verify Password</label>

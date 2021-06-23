@@ -9,5 +9,8 @@ namespace CS412Final_Pesa.Repositories.Interfaces {
     public interface IUserRepository {
         User GetUser(string email, string password);
         User CreateUser(User user);
+        Address CreateAddress(Address address);
+        bool DoesUserExistByEmail(string email);
+        List<User> GetUsers(List<long> userIds);
     }
 }

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/SystemMaster.Master" AutoEventWireup="true" CodeBehind="Dashboard.aspx.cs" Inherits="CS412Final_Pesa.DashboardPage" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/SystemMaster.Master" AutoEventWireup="true" CodeBehind="Dashboard.aspx.cs" Inherits="CS412Final_Pesa.DashboardPage" EnableViewState="true" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -31,6 +31,7 @@
     <div class="row">
         <div class="col">
             <div class="data-content">
+                <p class="fw-bold">All Orders</p>
                 <asp:GridView ID="gridOrderDetails" runat="server" CssClass="table table-sm table-striped" AutoGenerateColumns="false" AllowPaging="true" PageSize="10" OnRowDataBound="gridOrderDetails_RowDataBound" OnPageIndexChanging="gridOrderDetails_PageIndexChanging" OnRowDeleting="gridOrderDetails_RowDeleting">
                     <EmptyDataTemplate>
                         No records found.
@@ -59,6 +60,42 @@
                             </ItemTemplate>
                         </asp:TemplateField>
                         <asp:CommandField HeaderText="Delete" ShowDeleteButton="true" DeleteText="X" ControlStyle-CssClass="delete-mark" />
+                    </Columns>
+                </asp:GridView>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="data-content">
+                <p class="fw-bold">My Orders</p>
+                <asp:GridView ID="MyOrdersGrid" runat="server" CssClass="table table-sm table-striped" AutoGenerateColumns="false" AllowPaging="true" PageSize="10" OnRowDataBound="MyOrdersGrid_RowDataBound" OnPageIndexChanging="MyOrdersGrid_PageIndexChanging">
+                    <EmptyDataTemplate>
+                        No records found.
+                    </EmptyDataTemplate>
+                    <Columns>
+                        <asp:BoundField HeaderText="ID" DataField="Id" />
+                        <asp:TemplateField HeaderText="Customer">
+                            <ItemTemplate>
+                                <asp:HiddenField ID="hdnId" runat="server" />
+                                <asp:Label ID="lblCustomerName" runat="server" Text="Label"></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Services">
+                            <ItemTemplate>
+                                <asp:Label ID="lblServices" runat="server" Text="Label"></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Price">
+                            <ItemTemplate>
+                                <asp:Label ID="lblOrderPrice" runat="server" Text="Label"></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Service Date">
+                            <ItemTemplate>
+                                <asp:Label ID="lblServiceDate" runat="server" Text="Label"></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
                     </Columns>
                 </asp:GridView>
             </div>

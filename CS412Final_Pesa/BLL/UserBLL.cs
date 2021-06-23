@@ -15,7 +15,17 @@ namespace CS412Final_Pesa.BLL {
         }
 
         public User CreateUser(User user) {
-            return _userRepository.CreateUser(user);
+            //first, validate that we don't already have a user like this in our database
+            if (_userRepository.DoesUserExistByEmail(user.Email) == false) {
+                //first we want to create the address
+                user.Address = _userRepository.CreateAddress(user.Address);
+                if (user.Address != null) {
+                    //then we want to create the user
+                    return _userRepository.CreateUser(user);
+                }
+            }
+
+            return null;
         }
 
         public User GetUser(string email, string password) {

@@ -13,10 +13,14 @@ namespace CS412Final_Pesa {
 
         protected void Page_Load(object sender, EventArgs e) {
             if (Page.IsPostBack == false) {
+                User user = (User)Session["user"];
+
                 ViewState["orders"] = _orderBLL.GetOrders();
+                ViewState["myOrders"] = _orderBLL.GetOrders(user.Id);
 
                 SetPageData();
                 BindOrderDetailsGrid();
+                BindMyOrdersGrid();
             }
         }
 
@@ -33,6 +37,11 @@ namespace CS412Final_Pesa {
             gridOrderDetails.DataBind();
         }
 
+        private void BindMyOrdersGrid() {
+            MyOrdersGrid.DataSource = ViewState["myOrders"];
+            MyOrdersGrid.DataBind();
+        }
+
         protected void gridOrderDetails_PageIndexChanging(object sender, GridViewPageEventArgs e) {
             gridOrderDetails.PageIndex = e.NewPageIndex;
             BindOrderDetailsGrid();
@@ -46,11 +55,15 @@ namespace CS412Final_Pesa {
             if (long.TryParse(hdnId.Value, out Id)) {
                 Order order = ((List<Order>)ViewState["orders"]).FirstOrDefault(x => x.Id == Id);
                 if (order != null) {
+                    User user = (User)Session["user"];
+
                     _orderBLL.DeleteOrder(order.Id);
                     ViewState["orders"] = _orderBLL.GetOrders();
+                    ViewState["myOrders"] = _orderBLL.GetOrders(user.Id);
 
                     SetPageData();
                     BindOrderDetailsGrid();
+                    BindMyOrdersGrid();
                 }
             }
         }
@@ -74,7 +87,40 @@ namespace CS412Final_Pesa {
 
                 HiddenField id = (HiddenField)e.Row.FindControl("hdnId");
                 id.Value = order.Id.ToString();
+
+                User user = (User)Session["user"];
+                if (order.OrderedBy.Id != user.Id) {
+                    LinkButton deleteCmdField = (LinkButton)e.Row.Cells[5].Controls[0];
+                    deleteCmdField.Visible = false;
+                }
             }
+        }
+
+        protected void MyOrdersGrid_RowDataBound(object sender, GridViewRowEventArgs e) {
+            if (e.Row.RowType == DataControlRowType.DataRow) {
+                Order order = (Order)e.Row.DataItem;
+
+                Label customerName = (Label)e.Row.FindControl("lblCustomerName");
+                //customerName.Text = order.Customer.First + " " + order.Customer.Last;
+                customerName.Text = order.CustomerName;
+
+                Label services = (Label)e.Row.FindControl("lblServices");
+                services.Text = string.Join(", ", order.Services.Select(x => x.Name));
+
+                Label orderPrice = (Label)e.Row.FindControl("lblOrderPrice");
+                orderPrice.Text = $"${order.Total}";
+
+                Label serviceDate = (Label)e.Row.FindControl("lblServiceDate");
+                serviceDate.Text = order.ServiceDate.ToShortDateString();
+
+                HiddenField id = (HiddenField)e.Row.FindControl("hdnId");
+                id.Value = order.Id.ToString();
+            }
+        }
+
+        protected void MyOrdersGrid_PageIndexChanging(object sender, GridViewPageEventArgs e) {
+            MyOrdersGrid.PageIndex = e.NewPageIndex;
+            BindMyOrdersGrid();
         }
     }
 }
