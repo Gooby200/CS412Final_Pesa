@@ -1,12 +1,17 @@
-﻿using System;
+﻿using CS412Final_Pesa.Repositories;
+using CS412Final_Pesa.Repositories.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace CS412Final_Pesa {
     public partial class ContactUs : System.Web.UI.Page {
+        private readonly static IError _error = new Error();
         protected void Page_Load(object sender, EventArgs e) {
 
         }
@@ -24,8 +29,36 @@ namespace CS412Final_Pesa {
             SendFeedback(name.Text, email.Text, phone.Text, comment.Text);
         }
 
-        public void SendFeedback(string name, string email, string phone, string comment) {
+        public void SendFeedback(string userName, string userEmail, string phone, string comment) {
             //send feedback code here
+            using (MailMessage message = new MailMessage()) {
+                message.To.Add("rgpesa@yahoo.com");
+                message.From = new MailAddress(message.From.Address, "Order Through Me");
+                message.Subject = "OTM Feedback";
+                message.ReplyToList.Add(userEmail.Trim());
+                message.Body = $@"
+                                <p>User Email: {userEmail}</p>
+                                <p>User Name: {userName}</p>
+                                <p>User Phone: {phone}</p>
+                                <p>User Comment:<br>
+                                {comment}
+                                </p>
+                                ";
+                message.IsBodyHtml = true;
+
+                using (SmtpClient client = new SmtpClient()) {
+                    try {
+                        client.Send(message);
+                    } catch (Exception ex) {
+                        _error.Log(ex);
+                    }
+                }
+            }
+        }
+
+        protected void Button1_Click(object sender, EventArgs e) {
+            Response.Redirect("Login.aspx", false);
+            Console.WriteLine("hello world!");
         }
     }
 }
