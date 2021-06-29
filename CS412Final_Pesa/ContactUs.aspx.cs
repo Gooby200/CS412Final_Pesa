@@ -55,10 +55,5 @@ namespace CS412Final_Pesa {
                 }
             }
         }
-
-        protected void Button1_Click(object sender, EventArgs e) {
-            Response.Redirect("Login.aspx", false);
-            Console.WriteLine("hello world!");
-        }
     }
 }

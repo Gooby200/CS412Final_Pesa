@@ -17,7 +17,5 @@
         <asp:Panel ID="errorPanel" runat="server" Visible="false">
             <asp:Label ID="lblErrors" runat="server" Text="Label" CssClass="error-message"></asp:Label>
         </asp:Panel>
-
-        <asp:Button ID="Button1" runat="server" Text="Button" OnClick="Button1_Click" />
     </div>
 </asp:Content>
