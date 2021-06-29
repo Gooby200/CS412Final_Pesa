@@ -9,7 +9,7 @@ using System.Web;
 
 namespace CS412Final_Pesa.BLL {
     public class ServiceBLL : IServiceBLL {
-        public readonly IServiceRepository _serviceRepository;
+        private readonly IServiceRepository _serviceRepository;
         public ServiceBLL() {
             _serviceRepository = new ServiceRepository();
         }

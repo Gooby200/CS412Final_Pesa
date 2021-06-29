@@ -8,9 +8,9 @@ using System.Linq;
 
 namespace CS412Final_Pesa.BLL {
     public class OrderBLL : IOrderBLL {
-        public readonly IOrderRepository _orderRepository;
-        public readonly IServiceRepository _serviceRepository;
-        public readonly IUserRepository _userRepository;
+        private readonly IOrderRepository _orderRepository;
+        private readonly IServiceRepository _serviceRepository;
+        private readonly IUserRepository _userRepository;
 
         public OrderBLL() {
             _orderRepository = new OrderRepository();

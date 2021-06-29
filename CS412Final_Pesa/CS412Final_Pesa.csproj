@@ -208,9 +208,11 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="BLL\Interfaces\INotificationsBLL.cs" />
     <Compile Include="BLL\Interfaces\IOrderBLL.cs" />
     <Compile Include="BLL\Interfaces\IServiceBLL.cs" />
     <Compile Include="BLL\Interfaces\IUserBLL.cs" />
+    <Compile Include="BLL\NotificationsBLL.cs" />
     <Compile Include="BLL\OrderBLL.cs" />
     <Compile Include="BLL\ServiceBLL.cs" />
     <Compile Include="BLL\UserBLL.cs" />

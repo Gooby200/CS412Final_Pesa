@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace CS412Final_Pesa.Repositories.Interfaces {
-    interface IError {
+    public interface IError {
         bool Log(Exception ex);
     }
 }
