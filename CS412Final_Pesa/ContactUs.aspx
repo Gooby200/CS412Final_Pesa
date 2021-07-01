@@ -17,6 +17,5 @@
         <asp:Panel ID="errorPanel" runat="server" Visible="false">
             <asp:Label ID="lblErrors" runat="server" Text="Label" CssClass="error-message"></asp:Label>
         </asp:Panel>
-        asdf
     </div>
 </asp:Content>
