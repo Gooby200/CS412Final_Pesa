@@ -2,11 +2,8 @@
 using CS412Final_Pesa.Repositories;
 using CS412Final_Pesa.Repositories.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace CS412Final_Pesa.BLL {
     public class NotificationsBLL : INotificationsBLL {
