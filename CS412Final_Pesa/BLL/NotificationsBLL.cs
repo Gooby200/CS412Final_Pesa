@@ -34,30 +34,6 @@ namespace CS412Final_Pesa.BLL {
                     }
                 }
             }
-
-            //using (MailMessage message = new MailMessage()) {
-            //    message.To.Add("rgpesa@yahoo.com");
-            //    message.From = new MailAddress(message.From.Address, "Order Through Me");
-            //    message.Subject = "OTM Feedback";
-            //    message.ReplyToList.Add(userEmail.Trim());
-            //    message.Body = $@"
-            //                    <p>User Email: {userEmail}</p>
-            //                    <p>User Name: {userName}</p>
-            //                    <p>User Phone: {phone}</p>
-            //                    <p>User Comment:<br>
-            //                    {comment}
-            //                    </p>
-            //                    ";
-            //    message.IsBodyHtml = true;
-
-            //    using (SmtpClient client = new SmtpClient()) {
-            //        try {
-            //            client.Send(message);
-            //        } catch (Exception ex) {
-            //            _error.Log(ex);
-            //        }
-            //    }
-            //}
         }
     }
 }
