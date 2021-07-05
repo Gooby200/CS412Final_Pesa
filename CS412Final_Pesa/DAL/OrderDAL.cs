@@ -43,6 +43,64 @@ namespace CS412Final_Pesa.DAL {
             return orders;
         }
 
+        public static Order GetOrder(long orderId) {
+            Order order = null;
+            string sql = "SELECT * FROM Orders WHERE Id=@OrderId";
+            using (MySqlConnection conn = new MySqlConnection(WebConfigurationManager.AppSettings["connString"])) {
+                using (MySqlCommand cmd = new MySqlCommand(sql, conn)) {
+                    try {
+                        cmd.Connection.Open();
+                        cmd.Parameters.AddWithValue("@OrderId", orderId);
+                        using (MySqlDataReader reader = cmd.ExecuteReader()) {
+                            if (reader.HasRows) {
+                                if (reader.Read()) {
+                                    order = new Order() {
+                                        CustomerName = reader.GetString("CustomerName"),
+                                        Id = reader.GetInt64("Id"),
+                                        PaidAmount = reader.GetDecimal("PaidAmount"),
+                                        ServiceDate = reader.GetDateTime("ServiceDate"),
+                                        OrderedById = reader.GetInt64("OrderedBy")
+                                    };
+                                }
+                            }
+                        }
+                    } catch (Exception ex) {
+                        _error.Log(ex);
+                    }
+                }
+            }
+            return order;
+        }
+
+        public static List<Order> GetOrdersByCustomerName(string partialName) {
+            List<Order> orders = new List<Order>();
+            string sql = "SELECT * FROM Orders WHERE CustomerName LIKE CONCAT('%', @PartialName, '%')";
+            using (MySqlConnection conn = new MySqlConnection(WebConfigurationManager.AppSettings["connString"])) {
+                using (MySqlCommand cmd = new MySqlCommand(sql, conn)) {
+                    try {
+                        cmd.Connection.Open();
+                        cmd.Parameters.AddWithValue("@PartialName", partialName);
+                        using (MySqlDataReader reader = cmd.ExecuteReader()) {
+                            if (reader.HasRows) {
+                                while (reader.Read()) {
+                                    orders.Add(new Order() {
+                                        CustomerName = reader.GetString("CustomerName"),
+                                        Id = reader.GetInt64("Id"),
+                                        PaidAmount = reader.GetDecimal("PaidAmount"),
+                                        ServiceDate = reader.GetDateTime("ServiceDate"),
+                                        OrderedById = reader.GetInt64("OrderedBy")
+                                    });
+                                }
+                            }
+                        }
+                    } catch (Exception ex) {
+                        _error.Log(ex);
+                    }
+                }
+            }
+            return orders;
+        }
+
         public static List<long> GetOrderedByUserIds(List<long> orderIds) {
             List<long> userIds = new List<long>();
             string sql = "SELECT OrderedBy FROM Orders WHERE ID IN (#OrderIds)";
@@ -137,8 +195,11 @@ namespace CS412Final_Pesa.DAL {
                         cmd.Parameters.AddWithValue("@CustomerName", order.CustomerName);
                         cmd.Parameters.AddWithValue("@ServiceDate", order.ServiceDate);
                         cmd.Parameters.AddWithValue("@PaidAmount", order.PaidAmount);
-                        cmd.Parameters.AddWithValue("@OrderedBy", order.OrderedBy.Id);
-
+                        if (order.OrderedById > 0) {
+                            cmd.Parameters.AddWithValue("@OrderedBy", order.OrderedById);
+                        } else {
+                            cmd.Parameters.AddWithValue("@OrderedBy", order.OrderedBy.Id);
+                        }
                         string o = cmd.ExecuteScalar().ToString();
                         long id = 0;
                         long.TryParse(o, out id);

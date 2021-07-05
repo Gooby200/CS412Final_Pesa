@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 
 namespace CS412Final_Pesa.Models {
-    [Serializable]
     public class Order {
         public long Id { get; set; }
         public string CustomerName { get; set; }

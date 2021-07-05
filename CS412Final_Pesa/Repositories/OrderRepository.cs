@@ -20,8 +20,16 @@ namespace CS412Final_Pesa.Repositories {
             return OrderDAL.GetCompletedOrders();
         }
 
+        public Order GetOrder(long orderId) {
+            return OrderDAL.GetOrder(orderId);
+        }
+
         public long GetOrderCount() {
             return OrderDAL.GetOrderCount();
+        }
+
+        public List<Order> GetOrdersByCustomerName(string partialName) {
+            return OrderDAL.GetOrdersByCustomerName(partialName);
         }
 
         public List<long> GetOrderedByUserIds(List<long> orderIds) {

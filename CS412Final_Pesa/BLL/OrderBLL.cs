@@ -91,5 +91,35 @@ namespace CS412Final_Pesa.BLL {
                 }
             }
         }
+
+        public Order GetOrder(long orderId) {
+            Order order = _orderRepository.GetOrder(orderId);
+            if (order != null) {
+                order = AssociateServicesWithOrders(new List<Order> { order }).FirstOrDefault();
+                AssociateUsersWithOrders(new List<Order> { order });
+            }
+
+            return order;
+        }
+
+        public Order ModifyOrder(Order order, List<long> serviceIds) {
+            try {
+                //TODO implement order modification
+
+                if (serviceIds?.Count > 0) {
+                    //implement change services for the order
+                }
+
+                return order;
+            } catch (Exception ex) {
+                return null;
+            }
+        }
+
+        public List<Order> GetOrdersByCustomerName(string partialName) {
+            List<Order> orders = AssociateServicesWithOrders(_orderRepository.GetOrdersByCustomerName(partialName));
+            AssociateUsersWithOrders(orders);
+            return orders;
+        }
     }
 }
