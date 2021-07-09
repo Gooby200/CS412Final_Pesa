@@ -1,6 +1,7 @@
 ﻿using CS412Final_Pesa.BLL;
 using CS412Final_Pesa.BLL.Interfaces;
 using CS412Final_Pesa.Models;
+using CS412Final_Pesa.UserControls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +19,7 @@ namespace CS412Final_Pesa {
                 ViewState["orders"] = _orderBLL.GetOrders();
                 ViewState["myOrders"] = _orderBLL.GetOrders(user.Id);
 
-                SetPageData();
-                BindOrderDetailsGrid();
-                BindMyOrdersGrid();
+                BindAllGrids();
             }
         }
 
@@ -61,9 +60,7 @@ namespace CS412Final_Pesa {
                     ViewState["orders"] = _orderBLL.GetOrders();
                     ViewState["myOrders"] = _orderBLL.GetOrders(user.Id);
 
-                    SetPageData();
-                    BindOrderDetailsGrid();
-                    BindMyOrdersGrid();
+                    BindAllGrids();
                 }
             }
         }
@@ -121,6 +118,26 @@ namespace CS412Final_Pesa {
         protected void MyOrdersGrid_PageIndexChanging(object sender, GridViewPageEventArgs e) {
             MyOrdersGrid.PageIndex = e.NewPageIndex;
             BindMyOrdersGrid();
+        }
+
+        private void BindAllGrids() {
+            SetPageData();
+            BindOrderDetailsGrid();
+            BindMyOrdersGrid();
+            BindOrderControlRepeater();
+        }
+
+        private void BindOrderControlRepeater() {
+            OrderControlRepeater.DataSource = ViewState["myOrders"];
+            OrderControlRepeater.DataBind();
+        }
+
+        protected void OrderControlRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e) {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem) {
+                Order order = (Order)e.Item.DataItem;
+                OrderControl oc = (OrderControl)e.Item.FindControl("OrderControl");
+                oc.Order = order;
+            }
         }
     }
 }

@@ -1,4 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/SystemMaster.Master" AutoEventWireup="true" CodeBehind="Dashboard.aspx.cs" Inherits="CS412Final_Pesa.DashboardPage" EnableViewState="true" %>
+
+<%@ Register Src="~/UserControls/OrderControl.ascx" TagPrefix="PESAControl" TagName="OrderControl" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -27,6 +30,15 @@
                 <div class="number-text"><asp:Literal ID="litOrdersCompleted" runat="server"></asp:Literal></div>
             </div>
         </div>
+    </div>
+    <div class="row">
+        <asp:Repeater ID="OrderControlRepeater" runat="server" OnItemDataBound="OrderControlRepeater_ItemDataBound">
+            <ItemTemplate>
+                <div class="col-5">
+                    <PESAControl:OrderControl runat="server" id="OrderControl" />
+                </div>
+            </ItemTemplate>
+        </asp:Repeater>
     </div>
     <div class="row">
         <div class="col">

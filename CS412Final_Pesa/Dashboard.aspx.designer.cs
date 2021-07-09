@@ -58,6 +58,15 @@ namespace CS412Final_Pesa {
         protected global::System.Web.UI.WebControls.Literal litOrdersCompleted;
 
         /// <summary>
+        /// OrderControlRepeater control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater OrderControlRepeater;
+
+        /// <summary>
         /// gridOrderDetails control.
         /// </summary>
         /// <remarks>

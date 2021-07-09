@@ -174,20 +174,24 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Public.Master" />
     <Content Include="Login.aspx" />
+    <Content Include="Scripts\OrderServices.js" />
     <Content Include="SignUp.aspx" />
     <Content Include="ContactUs.aspx" />
     <Content Include="Dashboard.aspx" />
     <Content Include="OrdersServices.aspx" />
     <Content Include="Logout.aspx" />
     <Content Include="Examples\Example4.aspx" />
+    <Content Include="Styles\CustomerSearchControl.css" />
+    <Content Include="Styles\OrderControl.css" />
     <Content Include="Styles\Public.css" />
     <Content Include="Styles\Site.css" />
     <Content Include="Styles\SystemMaster.css" />
+    <Content Include="UserControls\CustomerSearchControl.ascx" />
+    <Content Include="UserControls\OrderControl.ascx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BLL\Interfaces\INotificationsBLL.cs" />
@@ -291,12 +295,25 @@
     <Compile Include="Examples\Example4.aspx.designer.cs">
       <DependentUpon>Example4.aspx</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\CustomerSearchControl.ascx.cs">
+      <DependentUpon>CustomerSearchControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\CustomerSearchControl.ascx.designer.cs">
+      <DependentUpon>CustomerSearchControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\OrderControl.ascx.cs">
+      <DependentUpon>OrderControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\OrderControl.ascx.designer.cs">
+      <DependentUpon>OrderControl.ascx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Examples\Scripts\" />
     <Folder Include="Examples\user_images\" />
-    <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

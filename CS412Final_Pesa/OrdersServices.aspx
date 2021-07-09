@@ -1,5 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/SystemMaster.Master" AutoEventWireup="true" CodeBehind="OrdersServices.aspx.cs" Inherits="CS412Final_Pesa.OrdersServicesPage" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script src="Scripts/OrderServices.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="row">
@@ -9,6 +11,7 @@
                 <hr />
                 <label class="fw-bold" for="<%= customerName.ClientID %>">Customer Name</label>
                 <asp:TextBox ID="customerName" CssClass="form-control" runat="server"></asp:TextBox>
+                <PESAControl:CustomerSearchControl runat="server" id="CustomerSearchControl" />
                 <label class="fw-bold" for="<%= serviceDate.ClientID %>">Service Date</label>
                 <asp:TextBox ID="serviceDate" CssClass="form-control" TextMode="Date" runat="server"></asp:TextBox>
                 <label class="fw-bold">Services</label>
