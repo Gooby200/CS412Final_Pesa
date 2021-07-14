@@ -10,7 +10,11 @@ using System.Web.UI.WebControls;
 
 namespace CS412Final_Pesa {
     public partial class DashboardPage : System.Web.UI.Page {
-        private readonly IOrderBLL _orderBLL = new OrderBLL();
+        private readonly IOrderBLL _orderBLL;
+
+        public DashboardPage(IOrderBLL orderBLL) {
+            _orderBLL = orderBLL;
+        }
 
         protected void Page_Load(object sender, EventArgs e) {
             if (Page.IsPostBack == false) {

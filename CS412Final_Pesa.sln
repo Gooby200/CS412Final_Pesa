@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.31313.79
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CS412Final_Pesa", "CS412Final_Pesa\CS412Final_Pesa.csproj", "{DBD97B6A-5200-4238-A5DF-A28305659143}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CS412Final_Pesa.Tests", "CS412Final_PesaTests\CS412Final_Pesa.Tests.csproj", "{2DAEEF08-A77F-4EEC-8C79-FB07B6EC6415}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,6 +20,12 @@ Global
 		{DBD97B6A-5200-4238-A5DF-A28305659143}.Localhost|Any CPU.Build.0 = Localhost|Any CPU
 		{DBD97B6A-5200-4238-A5DF-A28305659143}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DBD97B6A-5200-4238-A5DF-A28305659143}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DAEEF08-A77F-4EEC-8C79-FB07B6EC6415}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DAEEF08-A77F-4EEC-8C79-FB07B6EC6415}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DAEEF08-A77F-4EEC-8C79-FB07B6EC6415}.Localhost|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DAEEF08-A77F-4EEC-8C79-FB07B6EC6415}.Localhost|Any CPU.Build.0 = Debug|Any CPU
+		{2DAEEF08-A77F-4EEC-8C79-FB07B6EC6415}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DAEEF08-A77F-4EEC-8C79-FB07B6EC6415}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -12,10 +12,12 @@ namespace CS412Final_Pesa.BLL {
         private readonly IServiceRepository _serviceRepository;
         private readonly IUserRepository _userRepository;
 
-        public OrderBLL() {
-            _orderRepository = new OrderRepository();
-            _serviceRepository = new ServiceRepository();
-            _userRepository = new UserRepository();
+        public OrderBLL(IOrderRepository orderRepository,
+            IServiceRepository serviceRepository,
+            IUserRepository userRepository) {
+            _orderRepository = orderRepository;
+            _serviceRepository = serviceRepository;
+            _userRepository = userRepository;
         }
 
         public Order CreateOrder(Order order, List<long> serviceIds) {
@@ -71,10 +73,9 @@ namespace CS412Final_Pesa.BLL {
 
             foreach (OrderServices os in orderServices) {
                 Order o = orders.FirstOrDefault(x => x.Id == os.OrderId);
-                if (o.Services == null)
-                    o.Services = new List<Service>();
-
-                orders.FirstOrDefault(x => x.Id == os.OrderId).Services.Add(os.Service);
+                if (o != null) { //only add when there is an order for this service
+                    orders.FirstOrDefault(x => x.Id == os.OrderId).Services.Add(os.Service);
+                }
             }
 
             return orders;
