@@ -31,5 +31,9 @@ namespace CS412Final_Pesa.BLL {
         public User GetUser(string email, string password) {
             return _userRepository.GetUser(email, password);
         }
+
+        public bool UserExists(string email) {
+            return _userRepository.DoesUserExistByEmail(email);
+        }
     }
 }

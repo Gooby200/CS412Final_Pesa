@@ -59,6 +59,13 @@ namespace CS412Final_Pesa {
                 errors.Add("You must provide a zip.");
             }
 
+            //this validation is already done in createuser in userbll, but for error message
+            //display purposes, lets do the check here so that the user is aware of the issue
+            bool doesUserAlreadyExist = _userBLL.UserExists(email.Text.Trim());
+            if (doesUserAlreadyExist) {
+                errors.Add("User already exists. Please use a different email.");
+            }
+
             if (errors.Count > 0) {
                 errorPanel.Visible = true;
                 lblErrors.Text = string.Join("<br />", errors);
