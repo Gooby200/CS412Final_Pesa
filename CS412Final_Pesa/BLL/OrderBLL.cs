@@ -12,10 +12,13 @@ namespace CS412Final_Pesa.BLL {
         private readonly IServiceRepository _serviceRepository;
         private readonly IUserRepository _userRepository;
 
-        public OrderBLL() {
-            _orderRepository = new OrderRepository();
-            _serviceRepository = new ServiceRepository();
-            _userRepository = new UserRepository();
+        public OrderBLL(IOrderRepository orderRepository,
+            IServiceRepository serviceRepository,
+            IUserRepository userRepository) {
+
+            _orderRepository = orderRepository;
+            _serviceRepository = serviceRepository;
+            _userRepository = userRepository;
         }
 
         public Order CreateOrder(Order order, List<long> serviceIds) {

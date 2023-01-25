@@ -13,8 +13,8 @@ namespace CS412Final_Pesa.Controllers {
     public class OrdersController : ApiController {
         private readonly IOrderBLL _orderBLL;
 
-        public OrdersController() {
-            _orderBLL = new OrderBLL();
+        public OrdersController(IOrderBLL orderBLL) {
+            _orderBLL = orderBLL;
         }
 
         [HttpGet]
